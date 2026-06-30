@@ -6,116 +6,469 @@
   <title>Tagshield — Keep your Google Ads running after Consent Mode v2</title>
   <meta name="description" content="A sub-10KB, flat-priced cookie consent banner built for Google Consent Mode v2. Restore your conversion tracking and remarketing, honor GPC, and export a tamper-proof consent log. No OneTrust quote. No Core Web Vitals hit." />
   <link rel="preconnect" href="https://cdn.tagshield.io" />
+  <!-- Inter, loaded efficiently. Self-host or drop to a system stack for max Core Web Vitals. -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+  <script>document.documentElement.classList.add('js');</script>
   <link rel="stylesheet" href="styles.css" />
 </head>
 <body>
+  <!-- ───────────────────────── Navbar ───────────────────────── -->
   <header class="nav">
-    <a class="brand" href="/">⚡ Tagshield</a>
-    <nav>
-      <a href="#how">How it works</a>
-      <a href="#pricing">Pricing</a>
-      <a href="/agencies">Agencies</a>
-      <a class="btn btn-ghost" href="#scan">Scan my site</a>
-    </nav>
+    <div class="container nav-inner">
+      <a class="brand" href="/">⚡ Tagshield</a>
+      <nav class="nav-links">
+        <a href="#features">Features</a>
+        <a href="#how">How it works</a>
+        <a href="#security">Security</a>
+        <a href="#pricing">Pricing</a>
+        <a href="/agencies">Agencies</a>
+      </nav>
+      <div class="nav-cta">
+        <a class="link" href="#scan">Sign in</a>
+        <a class="btn btn-primary" href="#scan">Start for free</a>
+      </div>
+    </div>
   </header>
 
   <main>
+    <!-- ───────────────────────── Hero ───────────────────────── -->
     <section class="hero">
-      <p class="kicker">Google Consent Mode v2 native · certification in progress</p>
-      <h1>Your Google Ads conversions broke on June&nbsp;15.<br />Fix them in one line of code.</h1>
-      <p class="sub">
-        The fastest-loading, flat-priced cookie consent banner built natively for Google Consent
-        Mode&nbsp;v2. Install in 10 minutes, restore your conversion tracking and remarketing
-        audiences, and get a tamper-proof consent log you can actually export. No OneTrust quote
-        call. No Core Web Vitals hit.
-      </p>
-      <div class="cta-row">
-        <a class="btn btn-primary" href="#scan">Scan my site free →</a>
-        <a class="btn btn-ghost" href="#install">Install in 10 minutes →</a>
+      <div class="container hero-grid">
+        <div class="hero-copy">
+          <span class="pill pill-soft">Google Consent Mode v2 native · certification in progress</span>
+          <h1>Keep your Google&nbsp;Ads running after the Consent&nbsp;Mode&nbsp;v2 cutoff.</h1>
+          <p class="sub">
+            The fastest-loading, flat-priced cookie consent banner — built natively for Google
+            Consent Mode v2. Install in 10 minutes, restore your conversion tracking and remarketing,
+            and get a tamper-proof consent log you can export. No OneTrust quote call. No Core Web
+            Vitals hit.
+          </p>
+          <div class="cta-row">
+            <a class="btn btn-primary btn-lg" href="#scan">Scan my site free →</a>
+            <a class="btn btn-outline btn-lg" href="#install">Install in 10 minutes</a>
+          </div>
+          <p class="microtrust">No credit card · Free forever plan · Works on any platform</p>
+
+          <div class="logo-cloud">
+            <span class="logo-cloud-label">Works with the stack you already use</span>
+            <div class="logos marquee">
+              <div class="marquee-track">
+                <span class="logo-chip">Google Ads</span>
+                <span class="logo-chip">GA4</span>
+                <span class="logo-chip">Tag Manager</span>
+                <span class="logo-chip">Shopify</span>
+                <span class="logo-chip">WordPress</span>
+                <span class="logo-chip">Webflow</span>
+                <span class="logo-chip">Meta Pixel</span>
+                <!-- duplicated for a seamless loop -->
+                <span class="logo-chip" aria-hidden="true">Google Ads</span>
+                <span class="logo-chip" aria-hidden="true">GA4</span>
+                <span class="logo-chip" aria-hidden="true">Tag Manager</span>
+                <span class="logo-chip" aria-hidden="true">Shopify</span>
+                <span class="logo-chip" aria-hidden="true">WordPress</span>
+                <span class="logo-chip" aria-hidden="true">Webflow</span>
+                <span class="logo-chip" aria-hidden="true">Meta Pixel</span>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Product mock (no external image; pure HTML/CSS) -->
+        <div class="hero-art" aria-hidden="true">
+          <div class="browser">
+            <div class="browser-bar">
+              <span class="dot"></span><span class="dot"></span><span class="dot"></span>
+              <span class="url">yourstore.com</span>
+            </div>
+            <div class="browser-body">
+              <div class="skeleton-hero"></div>
+              <div class="skeleton-row"></div>
+              <div class="skeleton-row short"></div>
+              <div class="consent-banner">
+                <strong>We value your privacy</strong>
+                <span>We use cookies to run ads and measure traffic.</span>
+                <div class="consent-actions">
+                  <button class="mini btn-primary">Accept all</button>
+                  <button class="mini btn-outline">Reject all</button>
+                  <button class="mini btn-ghost">Preferences</button>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="float-card float-perf">
+            <span class="score" data-count="100">0</span>
+            <span>Lighthouse<br />performance</span>
+          </div>
+          <div class="float-card float-log">
+            <span class="tick-pulse">✓</span> Consent logged<br /><small>hash-chained &amp; exportable</small>
+          </div>
+        </div>
       </div>
-      <ul class="trust">
-        <li>Consent Mode v2 native</li>
-        <li>20 US state laws + GDPR / LGPD / PIPEDA</li>
-        <li>GPC opt-out honored &amp; displayed</li>
-        <li>Banner &lt; 10&nbsp;KB</li>
-      </ul>
     </section>
 
-    <section class="bullets">
-      <article>
-        <h3>⚡ Sub-10KB, edge-delivered</h3>
-        <p>Your Lighthouse score doesn't move. Incumbent scripts are 100KB+ and tank LCP — ours
-           doesn't show up in your Core Web Vitals.</p>
-      </article>
-      <article>
-        <h3>💵 Flat price, per visitor</h3>
-        <p>One price covers every site you run. No per-subpage tiers, no surprise renewal hikes
-           (OneTrust customers saw 275–468%; Cookiebot doubled its base in Aug 2025).</p>
-      </article>
-      <article>
-        <h3>🔒 Tamper-evident consent vault</h3>
-        <p>Every consent and every GPC opt-out is hash-chained and exportable. When a regulator
-           comes asking (Disney paid $2.75M in Feb 2026), you have proof in one click.</p>
-      </article>
+    <!-- ───────────────────────── Audience pills ───────────────────────── -->
+    <section class="audience">
+      <div class="container">
+        <p class="eyebrow">Built for the teams that live or die by ad performance</p>
+        <div class="pills">
+          <span class="pill">E-commerce stores</span>
+          <span class="pill">Performance agencies</span>
+          <span class="pill">Local services</span>
+          <span class="pill">B2B / lead-gen</span>
+          <span class="pill">Web studios</span>
+        </div>
+      </div>
     </section>
 
+    <!-- ───────────────────────── Feature rows ───────────────────────── -->
+    <section id="features" class="features">
+      <div class="container">
+        <header class="section-head" data-reveal>
+          <span class="eyebrow">Why teams switch</span>
+          <h2>The three things incumbents can't match without cannibalizing themselves.</h2>
+        </header>
+
+        <div class="feature-row" data-reveal>
+          <div class="feature-text">
+            <span class="badge">⚡ Performance</span>
+            <h3>Sub-10KB, edge-delivered. Your Lighthouse score doesn't move.</h3>
+            <p>Incumbent scripts are 100KB+ and tank your LCP. Ours is hand-built, async, and served
+               from the edge — it doesn't show up in your Core Web Vitals.</p>
+            <ul class="ticks">
+              <li>One async line of code</li>
+              <li>No layout shift, no web fonts</li>
+              <li>Live before/after Lighthouse proof</li>
+            </ul>
+          </div>
+          <div class="feature-visual">
+            <div class="stat-card">
+              <div class="bar"><span style="--w:96%">Tagshield <b>96</b></span></div>
+              <div class="bar muted"><span style="--w:58%">Cookiebot <b>58</b></span></div>
+              <div class="bar muted"><span style="--w:41%">OneTrust <b>41</b></span></div>
+              <p class="cap">Lighthouse performance (illustrative)</p>
+            </div>
+          </div>
+        </div>
+
+        <div class="feature-row reverse" data-reveal>
+          <div class="feature-text">
+            <span class="badge">💳 Flat pricing</span>
+            <h3>One flat price, per visitor — not per domain.</h3>
+            <p>No per-subpage tiers. No surprise renewal hikes (OneTrust customers saw 275–468%;
+               Cookiebot doubled its base in 2025). Run 1 site or 40 — the price is the price.</p>
+            <ul class="ticks">
+              <li>Every site under one bill</li>
+              <li>Transparent, published pricing</li>
+              <li>Pooled visitors for agencies</li>
+            </ul>
+          </div>
+          <div class="feature-visual">
+            <div class="price-chip-card">
+              <div class="row"><span>Your sites</span><b>12</b></div>
+              <div class="row"><span>Cookiebot (per domain)</span><b class="bad">$348/mo</b></div>
+              <div class="row"><span>Tagshield (flat)</span><b class="good">$49/mo</b></div>
+            </div>
+          </div>
+        </div>
+
+        <div class="feature-row" data-reveal>
+          <div class="feature-text">
+            <span class="badge">🔒 Consent vault</span>
+            <h3>A tamper-evident consent log you can actually export.</h3>
+            <p>Every consent and every GPC opt-out is hash-chained and exportable. When a regulator
+               comes asking (Disney paid $2.75M in 2026), you have cryptographic proof in one click.</p>
+            <ul class="ticks">
+              <li>Hash-chained, tamper-evident records</li>
+              <li>Signed PDF / CSV / JSON export</li>
+              <li>Daily anchoring you can verify yourself</li>
+            </ul>
+          </div>
+          <div class="feature-visual">
+            <div class="vault-card">
+              <div class="vault-row"><code>#a1f9…</code><span>banner_accept</span><em>✓</em></div>
+              <div class="vault-row"><code>#7c02…</code><span>gpc opt-out</span><em>✓</em></div>
+              <div class="vault-row"><code>#3e8b…</code><span>banner_reject</span><em>✓</em></div>
+              <p class="cap">Chain intact · 482,910 records verified</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ───────────────────────── Autopilot grid ───────────────────────── -->
+    <section class="grid-section">
+      <div class="container">
+        <header class="section-head center" data-reveal>
+          <span class="eyebrow">On autopilot</span>
+          <h2>Everything a modern CMP should do — and nothing it shouldn't.</h2>
+        </header>
+        <div class="cards" data-reveal>
+          <article class="card"><div class="icon">🎯</div><h4>Consent Mode v2 native</h4><p>All four signals set to safe defaults before any tag fires.</p></article>
+          <article class="card"><div class="icon">🛡️</div><h4>GPC honored &amp; displayed</h4><p>Auto opt-out for Global Privacy Control, plus California's "Opt-Out Honored" notice.</p></article>
+          <article class="card"><div class="icon">🌎</div><h4>20-state geo engine</h4><p>The right rules per visitor region — we track the laws so you don't.</p></article>
+          <article class="card"><div class="icon">🍪</div><h4>Auto cookie scan</h4><p>Crawls and categorizes your cookies automatically. No spreadsheets.</p></article>
+          <article class="card"><div class="icon">🔌</div><h4>2-click GTM template</h4><p>Add Tagshield as a tag in Google Tag Manager in seconds.</p></article>
+          <article class="card"><div class="icon">📈</div><h4>Consent analytics</h4><p>Opt-in rates, GPC signals, and banner load time at a glance.</p></article>
+        </div>
+      </div>
+    </section>
+
+    <!-- ───────────────────────── Free scan ───────────────────────── -->
     <section id="scan" class="scan">
-      <h2>Is your Google Ads tracking actually working?</h2>
-      <p>Paste a URL — we check whether your Consent Mode v2 signals fire correctly and whether a
-         CMP is detected. 30 seconds, no signup.</p>
-      <form class="scan-form" onsubmit="return tsScan(event)">
-        <input id="scan-url" type="url" inputmode="url" placeholder="https://yourstore.com" required />
-        <button class="btn btn-primary" type="submit">Check my site</button>
-      </form>
-      <p id="scan-result" class="scan-result" hidden></p>
-      <small class="muted">Free Consent Mode v2 checker. We email the full report; the verdict is instant.</small>
+      <div class="container scan-inner" data-reveal>
+        <h2>Is your Google Ads tracking actually working?</h2>
+        <p>Paste a URL — we check whether your Consent Mode v2 signals fire correctly and whether a
+           CMP is detected. 30 seconds, no signup.</p>
+        <form class="scan-form" onsubmit="return tsScan(event)">
+          <input id="scan-url" type="url" inputmode="url" placeholder="https://yourstore.com" required />
+          <button class="btn btn-primary" type="submit">Check my site</button>
+        </form>
+        <p id="scan-result" class="scan-result" hidden></p>
+        <small class="muted">Free Consent Mode v2 checker. We email the full report; the verdict is instant.</small>
+      </div>
     </section>
 
+    <!-- ───────────────────────── How it works ───────────────────────── -->
     <section id="how" class="how">
-      <h2>How it works</h2>
-      <ol>
-        <li><strong>Paste one line</strong> in your <code>&lt;head&gt;</code>. Consent Mode v2 defaults are set before any tag fires.</li>
-        <li><strong>We auto-scan</strong> your cookies and resolve the right rules for each visitor's region at the edge.</li>
-        <li><strong>Signals fire correctly</strong> — Google Ads &amp; GA4 get accurate consent, your conversions come back.</li>
-        <li><strong>Every decision is logged</strong> to a hash-chained vault you can export the day you're asked.</li>
-      </ol>
+      <div class="container">
+        <header class="section-head center" data-reveal>
+          <span class="eyebrow">How it works</span>
+          <h2>Live in under 10 minutes.</h2>
+        </header>
+        <div class="steps" data-reveal>
+          <div class="step"><span class="step-n">1</span><h4>Paste one line</h4><p>Add the snippet to your <code>&lt;head&gt;</code>. Consent Mode v2 defaults are set before any tag fires.</p></div>
+          <div class="step"><span class="step-n">2</span><h4>We auto-scan</h4><p>We categorize your cookies and resolve the right rules for each visitor's region at the edge.</p></div>
+          <div class="step"><span class="step-n">3</span><h4>Signals fire correctly</h4><p>Google Ads &amp; GA4 get accurate consent — your conversions and remarketing come back.</p></div>
+          <div class="step"><span class="step-n">4</span><h4>Every decision is logged</h4><p>To a hash-chained vault you can export the day you're asked.</p></div>
+        </div>
+      </div>
     </section>
 
+    <!-- ───────────────────────── Install ───────────────────────── -->
     <section id="install" class="install">
-      <h2>One line of code</h2>
-      <pre><code>&lt;script&gt;
+      <div class="container install-inner" data-reveal>
+        <h2>One line of code</h2>
+        <pre><code>&lt;script&gt;
   window.__tagshield = { key: "YOUR_SITE_KEY" };
-  // ...sets Consent Mode v2 defaults, then loads the &lt;10KB banner.
+  // sets Consent Mode v2 defaults, then loads the &lt;10KB banner
 &lt;/script&gt;</code></pre>
-      <p class="muted">Or add it as a 2-click tag from the Google Tag Manager template gallery.</p>
+        <p class="muted">Or add it as a 2-click tag from the Google Tag Manager template gallery.</p>
+      </div>
     </section>
 
+    <!-- ───────────────────────── Security ───────────────────────── -->
+    <section id="security" class="security">
+      <div class="container">
+        <header class="section-head center" data-reveal>
+          <span class="eyebrow">Security &amp; trust</span>
+          <h2>Privacy-by-design, all the way down.</h2>
+        </header>
+        <div class="sec-grid" data-reveal>
+          <div class="sec-col"><div class="icon">🔐</div><h4>No raw PII</h4><p>Consent logs store salted, pseudonymous IDs — never raw IPs or emails.</p></div>
+          <div class="sec-col"><div class="icon">⛓️</div><h4>Tamper-evident</h4><p>Hash-chained records with daily anchoring you can independently verify.</p></div>
+          <div class="sec-col"><div class="icon">🌍</div><h4>Edge-served</h4><p>Global CDN delivery with a fail-safe so an outage never breaks your site.</p></div>
+          <div class="sec-col"><div class="icon">📤</div><h4>Your data, exportable</h4><p>Export the full proof bundle anytime. No lock-in on your records.</p></div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ───────────────────────── Testimonials (PLACEHOLDER — replace before launch) ─────────── -->
+    <section class="testimonials">
+      <div class="container">
+        <header class="section-head center" data-reveal>
+          <span class="eyebrow">From early design partners</span>
+          <h2>What people say.</h2>
+        </header>
+        <!-- PLACEHOLDER quotes — swap for real, attributable customer testimonials before launch. -->
+        <div class="quotes" data-reveal>
+          <figure class="quote">
+            <blockquote>"Installed it across nine client sites in an afternoon. Remarketing audiences recovered the same week."</blockquote>
+            <figcaption>— Priya, performance agency lead</figcaption>
+          </figure>
+          <figure class="quote">
+            <blockquote>"Our Lighthouse score went back to 100 after we dropped the old banner. Same compliance, none of the bloat."</blockquote>
+            <figcaption>— Marco, Shopify store owner</figcaption>
+          </figure>
+          <figure class="quote">
+            <blockquote>"The exportable consent log is the part legal actually cared about. One click and they were happy."</blockquote>
+            <figcaption>— Dana, in-house marketer</figcaption>
+          </figure>
+        </div>
+      </div>
+    </section>
+
+    <!-- ───────────────────────── Pricing ───────────────────────── -->
     <section id="pricing" class="pricing">
-      <h2>Flat pricing. Every site. No tier traps.</h2>
-      <div class="tiers">
-        <div class="tier"><h3>Free</h3><p class="price">$0</p><ul><li>1 site · 5k visitors/mo</li><li>Consent Mode v2 + GPC</li><li>In-app log (no export)</li></ul></div>
-        <div class="tier"><h3>Starter</h3><p class="price">$19<span>/mo</span></p><ul><li>3 sites · 25k visitors/mo</li><li>Remove branding</li><li>Exportable consent vault</li></ul></div>
-        <div class="tier featured"><h3>Pro</h3><p class="price">$49<span>/mo</span></p><ul><li>10 sites · 100k visitors/mo</li><li>Vault API + signed export</li><li>5 team seats</li></ul></div>
-        <div class="tier"><h3>Agency</h3><p class="price">$199<span>+</span></p><ul><li>40+ client sites, pooled</li><li>White-label + custom domain</li><li>Per-client proof export</li></ul></div>
+      <div class="container">
+        <header class="section-head center" data-reveal>
+          <span class="eyebrow">Pricing</span>
+          <h2>Flat pricing. Every site. No tier traps.</h2>
+        </header>
+        <div class="tiers" data-reveal>
+          <div class="tier">
+            <h3>Free</h3><p class="price">$0</p>
+            <ul><li>1 site · 5k visitors/mo</li><li>Consent Mode v2 + GPC</li><li>In-app log (no export)</li></ul>
+            <a class="btn btn-outline btn-block" href="#scan">Start free</a>
+          </div>
+          <div class="tier">
+            <h3>Starter</h3><p class="price">$19<span>/mo</span></p>
+            <ul><li>3 sites · 25k visitors/mo</li><li>Remove branding</li><li>Exportable consent vault</li></ul>
+            <a class="btn btn-outline btn-block" href="#scan">Choose Starter</a>
+          </div>
+          <div class="tier featured">
+            <span class="tag">Most popular</span>
+            <h3>Pro</h3><p class="price">$49<span>/mo</span></p>
+            <ul><li>10 sites · 100k visitors/mo</li><li>Vault API + signed export</li><li>5 team seats</li></ul>
+            <a class="btn btn-primary btn-block" href="#scan">Choose Pro</a>
+          </div>
+          <div class="tier">
+            <h3>Agency</h3><p class="price">$199<span>+</span></p>
+            <ul><li>40+ client sites, pooled</li><li>White-label + custom domain</li><li>Per-client proof export</li></ul>
+            <a class="btn btn-outline btn-block" href="/agencies">Talk to us</a>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ───────────────────────── FAQ ───────────────────────── -->
+    <section class="faq">
+      <div class="container faq-inner" data-reveal>
+        <header class="section-head center" data-reveal>
+          <span class="eyebrow">FAQ</span>
+          <h2>Questions, answered.</h2>
+        </header>
+        <details><summary>Will this fix my Google Ads conversions after the Consent Mode v2 cutoff?</summary>
+          <p>Yes. Tagshield sets all four Consent Mode v2 signals to safe defaults before any tag fires and updates them on the visitor's choice, so Google Ads and GA4 receive accurate consent signals.</p></details>
+        <details><summary>Is it really under 10KB?</summary>
+          <p>The banner runtime ships with a CI size gate that fails the build above 10KB gzipped. It's async and edge-delivered, so it doesn't move your Core Web Vitals.</p></details>
+        <details><summary>Do you charge per domain?</summary>
+          <p>No. Pricing is flat, per monthly unique visitor — every site you run is under one bill. Agencies get pooled visitors across client workspaces.</p></details>
+        <details><summary>What is the consent vault?</summary>
+          <p>Every consent decision is appended to a hash-chained, tamper-evident log and anchored daily. You can export a signed proof bundle and verify the chain yourself.</p></details>
+        <details><summary>Are you a Google-certified CMP?</summary>
+          <p>We're Google Consent Mode v2 native and on the certification path. We never claim certification we don't have, and Tagshield is a tool, not legal advice.</p></details>
+      </div>
+    </section>
+
+    <!-- ───────────────────────── Final CTA band ───────────────────────── -->
+    <section class="cta-band">
+      <div class="container cta-inner" data-reveal>
+        <h2>Your ads are ready to run again.</h2>
+        <p>Install the fastest, flat-priced consent banner in 10 minutes — free to start.</p>
+        <a class="btn btn-white btn-lg" href="#scan">Start for free →</a>
       </div>
     </section>
   </main>
 
+  <!-- ───────────────────────── Footer ───────────────────────── -->
   <footer class="foot">
-    <p>⚡ Tagshield — consent that keeps your ads running.</p>
-    <p class="muted">Tagshield is a tool, not legal advice. Google Consent Mode v2 native; Google CMP certification in progress.</p>
+    <div class="container foot-grid">
+      <div>
+        <a class="brand" href="/">⚡ Tagshield</a>
+        <p class="muted">Consent that keeps your ads running.</p>
+      </div>
+      <div class="foot-col"><h5>Product</h5><a href="#features">Features</a><a href="#pricing">Pricing</a><a href="/agencies">Agencies</a><a href="#scan">Free scan</a></div>
+      <div class="foot-col"><h5>Resources</h5><a href="/seo/states/ca.html">State laws</a><a href="/seo/platforms/shopify.html">Platforms</a><a href="/seo/vs/cookiebot.html">Comparisons</a></div>
+      <div class="foot-col"><h5>Company</h5><a href="#">Blog</a><a href="#">Security</a><a href="#">Contact</a></div>
+    </div>
+    <div class="container foot-legal">
+      <p class="muted">© 2026 Tagshield. A tool, not legal advice. Google Consent Mode v2 native; Google CMP certification in progress.</p>
+    </div>
   </footer>
 
   <script>
-    // Stub for the free Consent Mode v2 checker. Wire to /scan in the edge worker.
+    (function () {
+      // ── reveal on scroll ──
+      var io = ('IntersectionObserver' in window) ? new IntersectionObserver(function (entries) {
+        entries.forEach(function (e) { if (e.isIntersecting) { e.target.classList.add('in'); io.unobserve(e.target); } });
+      }, { rootMargin: '0px 0px -8% 0px', threshold: 0.12 }) : null;
+      document.querySelectorAll('[data-reveal]').forEach(function (el) {
+        if (io) io.observe(el); else el.classList.add('in');
+      });
+
+      // ── count-up (e.g. the Lighthouse 100) ──
+      document.querySelectorAll('[data-count]').forEach(function (el) {
+        var target = parseInt(el.getAttribute('data-count'), 10) || 0, start = null, dur = 1400;
+        requestAnimationFrame(function step(t) {
+          if (!start) start = t;
+          var p = Math.min((t - start) / dur, 1);
+          el.textContent = Math.round((1 - Math.pow(1 - p, 3)) * target);
+          if (p < 1) requestAnimationFrame(step);
+        });
+      });
+
+      // ── nav shadow on scroll ──
+      var nav = document.querySelector('.nav');
+      function onScroll() { if (nav) nav.classList.toggle('scrolled', window.scrollY > 8); }
+      onScroll();
+      window.addEventListener('scroll', onScroll, { passive: true });
+    })();
+
+    // ── free Consent Mode v2 checker ──
+    // Calls a scan endpoint: the Cloudflare Worker /scan in production, or the local dev server
+    // (scripts/serve.py) which implements /scan too. Set window.__TAGSHIELD_API to point elsewhere.
+    var TAGSHIELD_API = window.__TAGSHIELD_API || '';
+
     function tsScan(e) {
       e.preventDefault();
       var out = document.getElementById('scan-result');
-      var url = document.getElementById('scan-url').value;
+      var input = document.getElementById('scan-url');
       out.hidden = false;
-      out.textContent = 'Checking ' + url + ' … (demo) — wire this button to the /scan endpoint.';
+      var url = (input.value || '').trim();
+      if (!/^https?:\/\//i.test(url)) url = 'https://' + url;
+      try { new URL(url); } catch (_) {
+        out.innerHTML = '<p class="scan-err">Please enter a valid website URL.</p>';
+        return false;
+      }
+      out.innerHTML = '<div class="scan-out"><div class="scan-status"><span class="spinner"></span> Scanning ' + esc(url) + ' …</div></div>';
+
+      fetch(TAGSHIELD_API + '/scan?url=' + encodeURIComponent(url), { headers: { accept: 'application/json' } })
+        .then(function (r) { if (!r.ok) throw new Error('http ' + r.status); return r.json(); })
+        .then(function (data) { renderVerdict(out, data); })
+        .catch(function () { renderFallback(out, url); });
       return false;
     }
+
+    var ICON = { pass: '✓', warn: '!', fail: '✕', info: 'i' };
+
+    function renderVerdict(out, data) {
+      var order = { fail: 0, warn: 1, info: 2, pass: 3 };
+      var checks = data.checks || [];
+      var worst = checks.reduce(function (w, c) { return order[c.status] < order[w] ? c.status : w; }, 'pass');
+      var head = worst === 'fail' ? { cls: 'fail', t: 'Your Google Ads tracking is at risk' }
+        : worst === 'warn' ? { cls: 'warn', t: 'A few things need attention' }
+        : { cls: 'pass', t: 'Your consent signals look healthy' };
+      var rows = checks.map(function (c, i) {
+        return '<li style="animation-delay:' + (i * 0.07) + 's"><span class="ic ' + c.status + '">' + ICON[c.status] + '</span>'
+          + '<span class="ct"><strong>' + esc(c.label) + '</strong><span>' + esc(c.detail || '') + '</span></span></li>';
+      }).join('');
+      out.innerHTML = '<div class="scan-out"><div class="verdict">'
+        + '<div class="verdict-head"><span class="verdict-badge ' + head.cls + '">' + ICON[head.cls] + '</span>'
+        + '<div><h4>' + head.t + '</h4><span class="sub-url">' + esc(data.url || '') + '</span></div></div>'
+        + '<ul class="checks">' + rows + '</ul>'
+        + '<div class="scan-cta"><a class="btn btn-primary" href="#install">Fix it with Tagshield →</a>'
+        + '<span class="muted" style="font-size:13px">Free to start · 10-minute install</span></div>'
+        + '</div></div>';
+    }
+
+    // Shown when no scan backend is reachable (e.g. static preview without the worker/dev server).
+    function renderFallback(out, url) {
+      var https = /^https:\/\//i.test(url);
+      out.innerHTML = '<div class="scan-out"><div class="verdict">'
+        + '<div class="verdict-head"><span class="verdict-badge ' + (https ? 'pass' : 'warn') + '">' + (https ? '✓' : '!') + '</span>'
+        + '<div><h4>Quick check done — run the full scan for the rest</h4><span class="sub-url">' + esc(url) + '</span></div></div>'
+        + '<ul class="checks">'
+        + '<li><span class="ic ' + (https ? 'pass' : 'warn') + '">' + (https ? '✓' : '!') + '</span><span class="ct"><strong>HTTPS</strong><span>' + (https ? 'Served securely.' : 'Not secure — HTTPS is required for modern cookies.') + '</span></span></li>'
+        + '<li><span class="ic info">i</span><span class="ct"><strong>Consent Mode v2 signals</strong><span>A browser can\'t read another site\'s tags (CORS). Our hosted scanner checks this server-side.</span></span></li>'
+        + '<li><span class="ic info">i</span><span class="ct"><strong>CMP detection &amp; GPC handling</strong><span>Included in the full server-side scan.</span></span></li>'
+        + '</ul>'
+        + '<div class="scan-cta"><a class="btn btn-primary" href="#install">Get the full scan + fix →</a></div>'
+        + '</div></div>';
+    }
+
+    function esc(s) { return String(s).replace(/[&<>"]/g, function (c) { return { '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[c]; }); }
   </script>
 </body>
 </html>

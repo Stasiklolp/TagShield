@@ -127,6 +127,14 @@ export default {
       return new Response(JSON.stringify(result), { headers: { ...JSON_HEADERS, ...cors(origin) } });
     }
 
+    // --- GET /scan?url= : free Consent Mode v2 checker (server-side fetch + heuristics) ---
+    if (url.pathname === '/scan' && req.method === 'GET') {
+      const result = await scanUrl(url.searchParams.get('url') || '');
+      return new Response(JSON.stringify(result), {
+        headers: { ...JSON_HEADERS, 'cache-control': 'no-store', ...cors(origin) },
+      });
+    }
+
     return new Response('not found', { status: 404, headers: cors(origin) });
   },
 
@@ -169,6 +177,67 @@ export default {
     }
   },
 } satisfies ExportedHandler<Env>;
+
+// ─────────────────────────────────────────────────────────────────────────────
+// Free Consent Mode v2 checker: fetch a URL server-side (no CORS) and run heuristics.
+// Mirrors scripts/serve.py's /scan so the local dev server and production behave the same.
+// ─────────────────────────────────────────────────────────────────────────────
+interface ScanCheck {
+  id: string;
+  label: string;
+  status: 'pass' | 'warn' | 'fail' | 'info';
+  detail: string;
+}
+
+const CMP_VENDORS: [string, string][] = [
+  ['cookiebot', 'Cookiebot'], ['otsdkstub', 'OneTrust'], ['onetrust', 'OneTrust'],
+  ['usercentrics', 'Usercentrics'], ['cookieyes', 'CookieYes'], ['termly', 'Termly'],
+  ['iubenda', 'iubenda'], ['osano', 'Osano'], ['enzuzo', 'Enzuzo'], ['didomi', 'Didomi'],
+  ['trustarc', 'TrustArc'], ['quantcast', 'Quantcast'], ['complianz', 'Complianz'],
+  ['klaro', 'Klaro'], ['cookieconsent', 'CookieConsent'], ['tagshield', 'Tagshield'],
+];
+
+function analyzeHtml(finalUrl: string, html: string): { url: string; checks: ScanCheck[] } {
+  const h = html.toLowerCase();
+  const norm = h.replace(/\s+/g, '').replace(/"/g, "'");
+  const hasGoogle = ['googletagmanager.com/gtm.js', 'gtag/js', 'google-analytics.com', 'gtag('].some((s) => h.includes(s));
+  const hasConsent = ["gtag('consent','default'", "gtag('consent','update'", "'consent','default'", "'consent','update'", 'consentmode'].some((s) => norm.includes(s));
+  const hasV2 = h.includes('ad_user_data') && h.includes('ad_personalization');
+  const vendor = CMP_VENDORS.find(([k]) => h.includes(k));
+  const secure = finalUrl.startsWith('https://');
+
+  const checks: ScanCheck[] = [];
+  checks.push({ id: 'https', label: 'HTTPS', status: secure ? 'pass' : 'warn', detail: secure ? 'Served securely.' : 'Not secure — HTTPS is required for modern cookies.' });
+  checks.push(hasGoogle
+    ? { id: 'google', label: 'Google tags detected', status: 'pass', detail: 'Google Ads / GA4 / Tag Manager found on the page.' }
+    : { id: 'google', label: 'Google Ads / GA4', status: 'info', detail: 'No Google tags detected — Consent Mode may not apply here.' });
+  if (hasGoogle && hasConsent) checks.push({ id: 'consent', label: 'Consent Mode active', status: 'pass', detail: 'A Consent Mode default/update was detected.' });
+  else if (hasGoogle && !hasConsent) checks.push({ id: 'consent', label: 'Consent Mode missing', status: 'fail', detail: 'Google tags fire with no Consent Mode — EU ads/measurement may be degraded or non-compliant.' });
+  if (hasConsent && hasV2) checks.push({ id: 'v2', label: 'Consent Mode v2 parameters', status: 'pass', detail: 'ad_user_data and ad_personalization are present.' });
+  else if (hasConsent && !hasV2) checks.push({ id: 'v2', label: 'Consent Mode v2 parameters', status: 'warn', detail: 'ad_user_data / ad_personalization not found — upgrade to v2.' });
+  checks.push(vendor
+    ? { id: 'cmp', label: 'Consent banner (CMP)', status: 'pass', detail: `Detected: ${vendor[1]}.` }
+    : { id: 'cmp', label: 'Consent banner (CMP)', status: 'warn', detail: 'No consent banner / CMP detected on the page.' });
+  return { url: finalUrl, checks };
+}
+
+async function scanUrl(target: string): Promise<{ url: string; checks: ScanCheck[] }> {
+  if (!target) return { url: '', checks: [{ id: 'reach', label: 'Missing URL', status: 'fail', detail: 'Provide a ?url= to scan.' }] };
+  let u = target;
+  if (!/^https?:\/\//i.test(u)) u = 'https://' + u;
+  try {
+    new URL(u);
+  } catch {
+    return { url: target, checks: [{ id: 'reach', label: 'Invalid URL', status: 'fail', detail: "That doesn't look like a valid website address." }] };
+  }
+  try {
+    const res = await fetch(u, { headers: { 'user-agent': 'TagshieldScanner/1.0 (+https://tagshield.io)' }, redirect: 'follow' });
+    const html = (await res.text()).slice(0, 700_000);
+    return analyzeHtml(res.url || u, html);
+  } catch {
+    return { url: u, checks: [{ id: 'reach', label: "Couldn't load the site", status: 'fail', detail: "We couldn't fetch this URL. Check the address and try again." }] };
+  }
+}
 
 /**
  * Compose the SiteConfig returned to the banner. In production, the per-site copy/theme/categories
