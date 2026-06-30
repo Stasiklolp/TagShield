@@ -1,0 +1,27 @@
+# deps
+node_modules/
+.pnpm-store/
+
+# builds
+dist/
+build/
+.wrangler/
+.dev.vars
+*.tsbuildinfo
+
+# generated SEO pages (regenerate with scripts/generate-seo-pages.mjs)
+apps/web/seo/
+
+# env / secrets
+.env
+.env.*
+!.env.example
+
+# claude local settings
+.claude/settings.local.json
+
+# os / editor
+.DS_Store
+.idea/
+.vscode/
+*.log

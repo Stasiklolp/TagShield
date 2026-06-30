@@ -1,0 +1,15 @@
+[
+  { "code": "CA", "name": "California", "law": "CCPA/CPRA", "effective": "2020-01-01", "gpc": true, "doNotSell": true, "optOutHonored": true },
+  { "code": "CO", "name": "Colorado", "law": "Colorado Privacy Act (CPA)", "effective": "2023-07-01", "gpc": true, "doNotSell": true, "optOutHonored": false },
+  { "code": "CT", "name": "Connecticut", "law": "Connecticut Data Privacy Act (CTDPA)", "effective": "2023-07-01", "gpc": true, "doNotSell": true, "optOutHonored": false },
+  { "code": "TX", "name": "Texas", "law": "Texas Data Privacy and Security Act (TDPSA)", "effective": "2024-07-01", "gpc": true, "doNotSell": true, "optOutHonored": false },
+  { "code": "OR", "name": "Oregon", "law": "Oregon Consumer Privacy Act (OCPA)", "effective": "2024-07-01", "gpc": true, "doNotSell": true, "optOutHonored": false },
+  { "code": "MT", "name": "Montana", "law": "Montana Consumer Data Privacy Act (MCDPA)", "effective": "2024-10-01", "gpc": true, "doNotSell": true, "optOutHonored": false },
+  { "code": "DE", "name": "Delaware", "law": "Delaware Personal Data Privacy Act", "effective": "2025-01-01", "gpc": true, "doNotSell": true, "optOutHonored": false },
+  { "code": "NE", "name": "Nebraska", "law": "Nebraska Data Privacy Act", "effective": "2025-01-01", "gpc": true, "doNotSell": true, "optOutHonored": false },
+  { "code": "NH", "name": "New Hampshire", "law": "NH Privacy Act", "effective": "2025-01-01", "gpc": true, "doNotSell": true, "optOutHonored": false },
+  { "code": "NJ", "name": "New Jersey", "law": "New Jersey Data Privacy Act", "effective": "2025-01-15", "gpc": true, "doNotSell": true, "optOutHonored": false },
+  { "code": "IN", "name": "Indiana", "law": "Indiana Consumer Data Protection Act", "effective": "2026-01-01", "gpc": true, "doNotSell": true, "optOutHonored": false },
+  { "code": "KY", "name": "Kentucky", "law": "Kentucky Consumer Data Protection Act", "effective": "2026-01-01", "gpc": false, "doNotSell": true, "optOutHonored": false },
+  { "code": "RI", "name": "Rhode Island", "law": "RI Data Transparency and Privacy Protection Act", "effective": "2026-01-01", "gpc": true, "doNotSell": true, "optOutHonored": false }
+]

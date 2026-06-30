@@ -1,0 +1,35 @@
+name = "tagshield-edge"
+main = "src/index.ts"
+compatibility_date = "2026-01-01"
+
+# --- the static banner bundle + per-site config / chain heads ---
+[[kv_namespaces]]
+binding = "BANNER"
+id = "REPLACE_WITH_KV_ID"        # holds key "b.js" (upload from packages/banner/dist/b.js)
+
+[[kv_namespaces]]
+binding = "SITES"
+id = "REPLACE_WITH_KV_ID"        # holds cfg:<key>, head:<key>
+
+# --- consent ingestion queue (decouples the beacon from persistence) ---
+[[queues.producers]]
+binding = "CONSENT_QUEUE"
+queue = "tagshield-consent"
+
+[[queues.consumers]]
+queue = "tagshield-consent"
+max_batch_size = 100
+max_batch_timeout = 5
+max_retries = 5
+dead_letter_queue = "tagshield-consent-dlq"
+
+# --- R2 for the immutable daily anchors + cold consent-log archive (object-lock) ---
+[[r2_buckets]]
+binding = "VAULT"
+bucket_name = "tagshield-vault"
+
+# DB connection string is a secret: `wrangler secret put DB_URL`
+# In production prefer a Hyperdrive binding for pooled Postgres access from the edge.
+
+[observability]
+enabled = true

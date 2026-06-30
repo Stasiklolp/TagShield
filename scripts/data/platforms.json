@@ -1,0 +1,10 @@
+[
+  { "slug": "wordpress", "name": "WordPress", "install": "Paste the snippet in your theme's header.php before wp_head(), or use a header-scripts plugin. A native plugin is on the roadmap." },
+  { "slug": "shopify", "name": "Shopify", "install": "Add the snippet to theme.liquid just inside <head>, above the Google/GA4 tags. Works with Shopify's Customer Privacy API." },
+  { "slug": "webflow", "name": "Webflow", "install": "Project Settings → Custom Code → Head Code. Paste the snippet first, above any GTM/Analytics embed." },
+  { "slug": "wix", "name": "Wix", "install": "Settings → Custom Code → add to <head> on all pages, set to load first. (Note: Wix bundles a free banner — Tagshield is for multi-site/agency and ad-signal correctness.)" },
+  { "slug": "squarespace", "name": "Squarespace", "install": "Settings → Advanced → Code Injection → Header. Paste the snippet above other tracking code." },
+  { "slug": "framer", "name": "Framer", "install": "Site Settings → Custom Code → Start of <head>. Paste the snippet before analytics." },
+  { "slug": "nextjs", "name": "Next.js", "install": "Add the inline snippet to a <Script strategy=\"beforeInteractive\"> in your root layout, ahead of the GA/GTM <Script> tags." },
+  { "slug": "gtm", "name": "Google Tag Manager", "install": "Add Tagshield via the GTM Community Template (2 clicks), or as a Custom HTML tag firing on Consent Initialization — All Pages." }
+]

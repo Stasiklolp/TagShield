@@ -1,0 +1,21 @@
+{
+  "name": "tagshield",
+  "version": "0.1.0",
+  "private": true,
+  "description": "Sub-10KB Google Consent Mode v2 CMP with a tamper-evident consent vault.",
+  "workspaces": [
+    "packages/*",
+    "apps/*"
+  ],
+  "scripts": {
+    "build:banner": "pnpm --filter @tagshield/banner build",
+    "dev:edge": "pnpm --filter @tagshield/edge dev",
+    "deploy:edge": "pnpm --filter @tagshield/edge deploy",
+    "db:apply": "psql \"$DATABASE_URL\" -f db/schema.sql",
+    "seo:gen": "node scripts/generate-seo-pages.mjs"
+  },
+  "engines": {
+    "node": ">=20"
+  },
+  "packageManager": "pnpm@9.0.0"
+}

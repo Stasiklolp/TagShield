@@ -1,0 +1,30 @@
+<!--
+  TAGSHIELD INSTALL SNIPPET
+  Paste this as the FIRST <script> in your <head>, BEFORE Google Tag Manager / gtag.js / any tag.
+
+  Why first + inline: Google Consent Mode v2 requires the consent "default" (denied) to be set
+  BEFORE any tag fires. This tiny inline block does that synchronously, then async-loads the
+  banner UI (b.js) which only ever sends 'update'. Replace SITE_KEY with your site key.
+-->
+<script>
+(function (w, d) {
+  w.__tagshield = { key: "SITE_KEY" };               // <-- your site key
+  w.dataLayer = w.dataLayer || [];
+  w.gtag = w.gtag || function () { w.dataLayer.push(arguments); };
+
+  // Consent Mode v2 — safe defaults BEFORE any tag. The banner will 'update' these.
+  gtag("consent", "default", {
+    ad_storage: "denied",
+    analytics_storage: "denied",
+    ad_user_data: "denied",
+    ad_personalization: "denied",
+    wait_for_update: 500
+  });
+
+  var s = d.createElement("script");
+  s.async = true;
+  s.src = "https://cdn.tagshield.io/b.js";           // static, edge-cached, <10KB
+  (d.head || d.documentElement).appendChild(s);
+})(window, document);
+</script>
+<!-- END TAGSHIELD -->

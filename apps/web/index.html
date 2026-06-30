@@ -1,0 +1,121 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Tagshield — Keep your Google Ads running after Consent Mode v2</title>
+  <meta name="description" content="A sub-10KB, flat-priced cookie consent banner built for Google Consent Mode v2. Restore your conversion tracking and remarketing, honor GPC, and export a tamper-proof consent log. No OneTrust quote. No Core Web Vitals hit." />
+  <link rel="preconnect" href="https://cdn.tagshield.io" />
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+  <header class="nav">
+    <a class="brand" href="/">⚡ Tagshield</a>
+    <nav>
+      <a href="#how">How it works</a>
+      <a href="#pricing">Pricing</a>
+      <a href="/agencies">Agencies</a>
+      <a class="btn btn-ghost" href="#scan">Scan my site</a>
+    </nav>
+  </header>
+
+  <main>
+    <section class="hero">
+      <p class="kicker">Google Consent Mode v2 native · certification in progress</p>
+      <h1>Your Google Ads conversions broke on June&nbsp;15.<br />Fix them in one line of code.</h1>
+      <p class="sub">
+        The fastest-loading, flat-priced cookie consent banner built natively for Google Consent
+        Mode&nbsp;v2. Install in 10 minutes, restore your conversion tracking and remarketing
+        audiences, and get a tamper-proof consent log you can actually export. No OneTrust quote
+        call. No Core Web Vitals hit.
+      </p>
+      <div class="cta-row">
+        <a class="btn btn-primary" href="#scan">Scan my site free →</a>
+        <a class="btn btn-ghost" href="#install">Install in 10 minutes →</a>
+      </div>
+      <ul class="trust">
+        <li>Consent Mode v2 native</li>
+        <li>20 US state laws + GDPR / LGPD / PIPEDA</li>
+        <li>GPC opt-out honored &amp; displayed</li>
+        <li>Banner &lt; 10&nbsp;KB</li>
+      </ul>
+    </section>
+
+    <section class="bullets">
+      <article>
+        <h3>⚡ Sub-10KB, edge-delivered</h3>
+        <p>Your Lighthouse score doesn't move. Incumbent scripts are 100KB+ and tank LCP — ours
+           doesn't show up in your Core Web Vitals.</p>
+      </article>
+      <article>
+        <h3>💵 Flat price, per visitor</h3>
+        <p>One price covers every site you run. No per-subpage tiers, no surprise renewal hikes
+           (OneTrust customers saw 275–468%; Cookiebot doubled its base in Aug 2025).</p>
+      </article>
+      <article>
+        <h3>🔒 Tamper-evident consent vault</h3>
+        <p>Every consent and every GPC opt-out is hash-chained and exportable. When a regulator
+           comes asking (Disney paid $2.75M in Feb 2026), you have proof in one click.</p>
+      </article>
+    </section>
+
+    <section id="scan" class="scan">
+      <h2>Is your Google Ads tracking actually working?</h2>
+      <p>Paste a URL — we check whether your Consent Mode v2 signals fire correctly and whether a
+         CMP is detected. 30 seconds, no signup.</p>
+      <form class="scan-form" onsubmit="return tsScan(event)">
+        <input id="scan-url" type="url" inputmode="url" placeholder="https://yourstore.com" required />
+        <button class="btn btn-primary" type="submit">Check my site</button>
+      </form>
+      <p id="scan-result" class="scan-result" hidden></p>
+      <small class="muted">Free Consent Mode v2 checker. We email the full report; the verdict is instant.</small>
+    </section>
+
+    <section id="how" class="how">
+      <h2>How it works</h2>
+      <ol>
+        <li><strong>Paste one line</strong> in your <code>&lt;head&gt;</code>. Consent Mode v2 defaults are set before any tag fires.</li>
+        <li><strong>We auto-scan</strong> your cookies and resolve the right rules for each visitor's region at the edge.</li>
+        <li><strong>Signals fire correctly</strong> — Google Ads &amp; GA4 get accurate consent, your conversions come back.</li>
+        <li><strong>Every decision is logged</strong> to a hash-chained vault you can export the day you're asked.</li>
+      </ol>
+    </section>
+
+    <section id="install" class="install">
+      <h2>One line of code</h2>
+      <pre><code>&lt;script&gt;
+  window.__tagshield = { key: "YOUR_SITE_KEY" };
+  // ...sets Consent Mode v2 defaults, then loads the &lt;10KB banner.
+&lt;/script&gt;</code></pre>
+      <p class="muted">Or add it as a 2-click tag from the Google Tag Manager template gallery.</p>
+    </section>
+
+    <section id="pricing" class="pricing">
+      <h2>Flat pricing. Every site. No tier traps.</h2>
+      <div class="tiers">
+        <div class="tier"><h3>Free</h3><p class="price">$0</p><ul><li>1 site · 5k visitors/mo</li><li>Consent Mode v2 + GPC</li><li>In-app log (no export)</li></ul></div>
+        <div class="tier"><h3>Starter</h3><p class="price">$19<span>/mo</span></p><ul><li>3 sites · 25k visitors/mo</li><li>Remove branding</li><li>Exportable consent vault</li></ul></div>
+        <div class="tier featured"><h3>Pro</h3><p class="price">$49<span>/mo</span></p><ul><li>10 sites · 100k visitors/mo</li><li>Vault API + signed export</li><li>5 team seats</li></ul></div>
+        <div class="tier"><h3>Agency</h3><p class="price">$199<span>+</span></p><ul><li>40+ client sites, pooled</li><li>White-label + custom domain</li><li>Per-client proof export</li></ul></div>
+      </div>
+    </section>
+  </main>
+
+  <footer class="foot">
+    <p>⚡ Tagshield — consent that keeps your ads running.</p>
+    <p class="muted">Tagshield is a tool, not legal advice. Google Consent Mode v2 native; Google CMP certification in progress.</p>
+  </footer>
+
+  <script>
+    // Stub for the free Consent Mode v2 checker. Wire to /scan in the edge worker.
+    function tsScan(e) {
+      e.preventDefault();
+      var out = document.getElementById('scan-result');
+      var url = document.getElementById('scan-url').value;
+      out.hidden = false;
+      out.textContent = 'Checking ' + url + ' … (demo) — wire this button to the /scan endpoint.';
+      return false;
+    }
+  </script>
+</body>
+</html>
