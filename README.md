@@ -1,5 +1,7 @@
 # Tagshield
 
+[![CI](https://github.com/Stasiklolp/TagShield/actions/workflows/ci.yml/badge.svg)](https://github.com/Stasiklolp/TagShield/actions/workflows/ci.yml)
+
 > A sub-10KB, Google-Consent-Mode-v2-native cookie-consent banner with a tamper-evident,
 > exportable consent-proof vault — sold self-serve to ad-dependent SMBs and the agencies that serve them.
 
@@ -97,9 +99,12 @@ psql "$DATABASE_URL" -f db/schema.sql
 # 5. generate the programmatic SEO pages
 node scripts/generate-seo-pages.mjs        # writes apps/web/seo/**
 
-# 6. open the landing page
-open apps/web/index.html
+# 6. preview the landing page + the WORKING Consent Mode v2 checker
+python3 scripts/serve.py                    # http://127.0.0.1:4187  (serves the site AND /scan)
 ```
+
+> Open the site via the dev server (step 6), not `file://` — the free checker calls a `/scan`
+> endpoint that `scripts/serve.py` (and, in production, the Cloudflare Worker) implements.
 
 ## Honest status
 

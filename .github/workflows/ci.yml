@@ -1,0 +1,37 @@
+name: CI
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Install pnpm
+        uses: pnpm/action-setup@v4 # version comes from package.json "packageManager"
+
+      - name: Install Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20
+
+      - name: Install dependencies
+        run: pnpm install --no-frozen-lockfile
+
+      # The core check: build the banner and FAIL if it exceeds the 10KB gzip budget.
+      - name: Build banner (enforces <10KB gzip size gate)
+        run: pnpm --filter @tagshield/banner build
+
+      # Smoke test: the programmatic SEO generator must run without error.
+      - name: Generate SEO pages
+        run: node scripts/generate-seo-pages.mjs
+
+      # Type checking is informational for now (does not block the build).
+      - name: Typecheck (informational)
+        run: pnpm -r --if-present typecheck
+        continue-on-error: true
