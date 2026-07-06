@@ -197,6 +197,9 @@ create table consent_logs (
   user_agent_hash       text,
   prev_hash             char(64) not null,
   record_hash           char(64) not null,
+  -- Exact canonical JSON the record_hash commits to. Stored verbatim so integrity verification
+  -- re-hashes these bytes directly (immune to timestamp/jsonb round-tripping). See hashchain.ts.
+  canonical             text not null,
   created_at            timestamptz not null default now(),
   primary key (id, created_at)
 ) partition by range (created_at);

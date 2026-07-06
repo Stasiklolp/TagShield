@@ -5,7 +5,7 @@
   "description": "Sub-10KB Google Consent Mode v2 CMP with a tamper-evident consent vault.",
   "workspaces": [
     "packages/*",
-    "apps/*"
+    "apps/dashboard"
   ],
   "scripts": {
     "build:banner": "pnpm --filter @tagshield/banner build",

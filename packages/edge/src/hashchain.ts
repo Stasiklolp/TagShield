@@ -22,7 +22,7 @@ export function canonicalJSON(value: unknown): string {
   return '{' + keys.map((k) => JSON.stringify(k) + ':' + canonicalJSON(obj[k])).join(',') + '}';
 }
 
-async function sha256Hex(input: string): Promise<string> {
+export async function sha256Hex(input: string): Promise<string> {
   const data = new TextEncoder().encode(input);
   const digest = await crypto.subtle.digest('SHA-256', data);
   return [...new Uint8Array(digest)].map((b) => b.toString(16).padStart(2, '0')).join('');
@@ -39,14 +39,53 @@ export interface ChainedRecord {
   [k: string]: unknown;
 }
 
-/** Append one record to a chain, returning the chained record + the new head hash. */
+/**
+ * Append one record to a chain.
+ *
+ * Returns the chained record, the new head hash, AND the exact `canonical` string the hash
+ * commits to. Persist `canonical` verbatim: Postgres re-serializes timestamps and jsonb, so
+ * reconstructing the hashed bytes from typed columns is fragile. Re-hashing the stored
+ * canonical (see `verifyCanonicalChain`) is exact and round-trip-proof.
+ */
 export async function appendToChain(
   record: Record<string, unknown>,
   prevHash: string,
-): Promise<{ chained: ChainedRecord; head: string }> {
+): Promise<{ chained: ChainedRecord; head: string; canonical: string }> {
   const base = { ...record, prev_hash: prevHash };
-  const head = await recordHash(base, prevHash);
-  return { chained: { ...base, record_hash: head }, head };
+  const canonical = canonicalJSON(base);
+  const head = await sha256Hex(canonical + prevHash);
+  return { chained: { ...base, record_hash: head }, head, canonical };
+}
+
+/** A chain row as stored in / loaded from the vault: the two hashes + the integrity witness. */
+export interface StoredChainRow {
+  prev_hash: string;
+  record_hash: string;
+  canonical: string;
+}
+
+/**
+ * Verify a chain loaded from storage by re-hashing each stored `canonical` payload. This is the
+ * production path (see the Worker's GET /verify/:key) and is immune to DB type round-tripping,
+ * because it never reconstructs the hashed bytes from typed columns.
+ */
+export async function verifyCanonicalChain(
+  rows: StoredChainRow[],
+  genesis = GENESIS,
+): Promise<{ ok: true } | { ok: false; index: number; reason: string }> {
+  let prev = genesis;
+  for (let i = 0; i < rows.length; i++) {
+    const r = rows[i];
+    if (r.prev_hash !== prev) {
+      return { ok: false, index: i, reason: 'prev_hash does not match prior record_hash' };
+    }
+    const expect = await sha256Hex(r.canonical + r.prev_hash);
+    if (expect !== r.record_hash) {
+      return { ok: false, index: i, reason: 'record_hash does not match stored canonical (tampered)' };
+    }
+    prev = r.record_hash;
+  }
+  return { ok: true };
 }
 
 /**

@@ -2,3 +2,4 @@
 # apps/web is a static site with no package.json, so it isn't a workspace package.
 packages:
   - "packages/*"
+  - "apps/dashboard"
