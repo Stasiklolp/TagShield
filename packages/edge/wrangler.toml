@@ -9,7 +9,7 @@ id = "REPLACE_WITH_KV_ID"        # holds key "b.js" (upload from packages/banner
 
 [[kv_namespaces]]
 binding = "SITES"
-id = "REPLACE_WITH_KV_ID"        # holds cfg:<key>, head:<key>
+id = "REPLACE_WITH_KV_ID"        # holds cfg:<key>, head:<site_id>
 
 # --- consent ingestion queue (decouples the beacon from persistence) ---
 [[queues.producers]]
@@ -28,8 +28,15 @@ dead_letter_queue = "tagshield-consent-dlq"
 binding = "VAULT"
 bucket_name = "tagshield-vault"
 
-# DB connection string is a secret: `wrangler secret put DB_URL`
-# In production prefer a Hyperdrive binding for pooled Postgres access from the edge.
+# --- vault storage: Supabase over PostgREST (fetch-based — no driver, no nodejs_compat) ---
+# Set as secrets (never commit these):
+#   wrangler secret put SUPABASE_URL                # https://<ref>.supabase.co
+#   wrangler secret put SUPABASE_SERVICE_ROLE_KEY   # service_role key (server-only, bypasses RLS)
+
+# --- daily vault anchor job (snapshots each site's chain head to R2 + vault_anchors) ---
+# Enable R2 Object Lock (compliance mode) on the tagshield-vault bucket so anchors are immutable.
+[triggers]
+crons = ["17 3 * * *"]            # every day at 03:17 UTC
 
 [observability]
 enabled = true

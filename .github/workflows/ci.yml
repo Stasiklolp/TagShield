@@ -27,6 +27,18 @@ jobs:
       - name: Build banner (enforces <10KB gzip size gate)
         run: pnpm --filter @tagshield/banner build
 
+      # Prove the vault's tamper-evidence, geo engine, and bot filter still hold.
+      - name: Test edge core (hashchain / geo / bots / proof export)
+        run: pnpm --filter @tagshield/edge test
+
+      # Cookie categorizer unit tests.
+      - name: Test scanner (cookie categorization)
+        run: pnpm --filter @tagshield/scanner test
+
+      # The dashboard must compile (type-checked Next.js build; no env needed).
+      - name: Build dashboard
+        run: pnpm --filter @tagshield/dashboard build
+
       # Smoke test: the programmatic SEO generator must run without error.
       - name: Generate SEO pages
         run: node scripts/generate-seo-pages.mjs
