@@ -25,6 +25,17 @@ function installSnippet(key: string): string {
 </script>`;
 }
 
+function CategoryBadge({ category }: { category: string }) {
+  const map: Record<string, string> = {
+    necessary: 'pill-ok',
+    functional: 'pill-ok',
+    analytics: 'pill-pending',
+    marketing: 'pill-paused',
+    unclassified: 'pill-pending',
+  };
+  return <span className={`pill ${map[category] ?? 'pill-pending'}`}>{category}</span>;
+}
+
 export default async function SiteDetail({ params }: { params: { id: string } }) {
   const { org } = await requireOrg();
   const db = adminClient();
@@ -65,6 +76,22 @@ export default async function SiteDetail({ params }: { params: { id: string } })
     countBy('banner_reject'),
     countBy('gpc'),
   ]);
+
+  // Cookie scan results (populated by @tagshield/scanner).
+  const { data: lastScan } = await db
+    .from('scans')
+    .select('pages_crawled,cookies_found,new_count,finished_at')
+    .eq('site_id', site.id)
+    .order('finished_at', { ascending: false })
+    .limit(1)
+    .maybeSingle();
+  const { data: cookieRows } = await db
+    .from('site_cookies')
+    .select('cookie_name,domain,category')
+    .eq('site_id', site.id)
+    .order('category', { ascending: true })
+    .order('cookie_name', { ascending: true });
+  const cookies = (cookieRows ?? []) as { cookie_name: string; domain: string | null; category: string }[];
 
   const snippet = installSnippet(site.public_site_key);
   const isLive = site.status === 'active';
@@ -156,6 +183,51 @@ export default async function SiteDetail({ params }: { params: { id: string } })
           <p className="muted" style={{ fontSize: 12 }}>
             Saving bumps the config version and pushes it to the edge KV so <code>/config/{site.public_site_key}</code> serves it. The version is stamped into every consent record.
           </p>
+        </div>
+
+        {/* Cookies */}
+        <div className="card stack">
+          <h2>
+            4 · Cookies{' '}
+            {cookies.length > 0 && (
+              <span className="muted" style={{ fontWeight: 400, fontSize: 14 }}>({cookies.length})</span>
+            )}
+          </h2>
+          {lastScan ? (
+            <p className="muted">
+              Last scan: {lastScan.cookies_found} cookies across {lastScan.pages_crawled} page(s)
+              {lastScan.new_count > 0 && (
+                <> · <span style={{ color: 'var(--warn)' }}>{lastScan.new_count} new since previous</span></>
+              )}
+            </p>
+          ) : (
+            <p className="muted">
+              No scan yet — run{' '}
+              <code>pnpm --filter @tagshield/scanner scan {site.id} https://{site.domain}</code>.
+            </p>
+          )}
+          {cookies.length > 0 && (
+            <div style={{ overflowX: 'auto' }}>
+              <table style={{ width: '100%', borderCollapse: 'collapse', fontSize: 13 }}>
+                <thead>
+                  <tr style={{ textAlign: 'left', color: 'var(--ink-2)' }}>
+                    <th style={{ padding: '6px 8px' }}>Cookie</th>
+                    <th style={{ padding: '6px 8px' }}>Domain</th>
+                    <th style={{ padding: '6px 8px' }}>Category</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  {cookies.map((c, i) => (
+                    <tr key={i} style={{ borderTop: '1px solid var(--line)' }}>
+                      <td style={{ padding: '6px 8px', fontFamily: 'ui-monospace, monospace' }}>{c.cookie_name}</td>
+                      <td style={{ padding: '6px 8px' }} className="muted">{c.domain || '—'}</td>
+                      <td style={{ padding: '6px 8px' }}><CategoryBadge category={c.category} /></td>
+                    </tr>
+                  ))}
+                </tbody>
+              </table>
+            </div>
+          )}
         </div>
       </div>
     </>

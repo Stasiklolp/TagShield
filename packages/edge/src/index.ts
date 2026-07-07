@@ -25,6 +25,7 @@ import {
 } from './db';
 import { buildProofBundle, bundleToCsv, VERIFIER_JS } from './export';
 import { resolveRegime } from './geo';
+import { rateLimited } from './guard';
 import { appendToChain, GENESIS, verifyCanonicalChain } from './hashchain';
 
 export interface Env {
@@ -191,6 +192,10 @@ export default {
 
     // --- GET /scan?url= : free Consent Mode v2 checker (server-side fetch + heuristics) ---
     if (url.pathname === '/scan' && req.method === 'GET') {
+      const ip = req.headers.get('cf-connecting-ip') || '';
+      if (await rateLimited(env.SITES, 'scan', ip, 10, 60)) {
+        return json({ error: 'Too many scans — please try again in a minute.' }, 429, origin);
+      }
       const result = await scanUrl(url.searchParams.get('url') || '');
       return new Response(JSON.stringify(result), {
         headers: { ...JSON_HEADERS, 'cache-control': 'no-store', ...cors(origin) },
